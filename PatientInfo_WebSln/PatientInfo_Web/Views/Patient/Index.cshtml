@@ -1,0 +1,60 @@
+﻿@model IEnumerable<PatientInfo_Web.Models.DTOs.Patient>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patients List</title>
+   
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+    <h2>Patients List</h2>
+    <a href="~/Patient/Create" class="btn btn-primary">Create Patient</a>
+    <table id="patientTable" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Disease</th>
+              
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var patient in Model)
+            {
+                <tr>
+                    <td>@patient.PatientID</td>
+                    <td>@patient.Name</td>
+                    <td>@patient.Disease?.DiseaseName</td>
+                   
+                </tr>
+            }
+        </tbody>
+    </table>
+
+   
+
+    <script>
+        $(document).ready(function () {
+
+            
+            $(".edit").click(function (e) {
+                e.preventDefault();
+                var patientId = $(this).data("id");
+               
+                console.log("Edit button clicked for patient ID: " + patientId);
+            });
+
+          
+            $(".delete").click(function (e) {
+                e.preventDefault();
+                var patientId = $(this).data("id");
+                
+                console.log("Delete button clicked for patient ID: " + patientId);
+            });
+        });
+    </script>
+
+</body>
+</html>

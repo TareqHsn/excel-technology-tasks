@@ -1,0 +1,59 @@
+﻿@model PatientInfo_Web.Models.DTOs.Disease
+@{
+    ViewData["Title"] = "Create Disease";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2>Create Disease</h2>
+
+    <form id="createDiseaseForm">
+        <div class="form-group">
+            <label for="diseaseName">Disease Name:</label>
+            <input type="text" class="form-control" id="diseaseName" name="diseaseName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="epilepsy">Epilepsy:</label>
+            <select class="form-control" id="epilepsy" name="epilepsy" required>
+                <option value="@((int)PatientInfo_Web.Models.DTOs.EpilepsyStatus.No)">No</option>
+                <option value="@((int)PatientInfo_Web.Models.DTOs.EpilepsyStatus.Yes)">Yes</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Disease</button>
+    </form>
+</div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+           
+            $("#createDiseaseForm").submit(function (e) {
+                e.preventDefault();
+
+                var diseaseData = {
+                    DiseaseName: $("#diseaseName").val(),
+                    Epilepsy: parseInt($("#epilepsy").val())
+                };
+
+                $.ajax({
+                    url: "/Disease/Create", // Update controller action
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(diseaseData),
+                    success: function () {
+                        
+                        window.location.href = "/Disease/Index"; // Update desired redirect URL
+                    },
+                    error: function (xhr, status, error) {
+                      
+                        console.error(xhr.responseText);
+                        alert("An error occurred while creating the disease. Please try again.");
+                    }
+                });
+            });
+        });
+    </script>
+}

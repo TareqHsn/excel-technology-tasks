@@ -1,0 +1,55 @@
+--Diseases Table
+CREATE TABLE Diseases (
+    DiseaseID INT PRIMARY KEY IDENTITY (1,1) NOT NULL,
+    DiseaseName VARCHAR(50)  NOT  NULL,
+    Epilepsy INT NOT NULL,
+
+    -- Check constraint to ensure that Epilepsy is either 0 or 1
+    CHECK (Epilepsy IN (0, 1))
+);
+
+-- Patients table
+
+CREATE TABLE Patients (
+    ID INT PRIMARY KEY IDENTITY(1,1)  NOT  NULL,
+   Name VARCHAR(25) NOT NULL,
+    DiseaseID INT NOT NULL,
+
+        FOREIGN KEY (DiseaseID) REFERENCES Diseases(DiseaseID)
+);
+
+-- NCDs table
+
+CREATE TABLE NCDs (
+    NCDID INT PRIMARY KEY IDENTITY(1,1)  NOT  NULL,
+    NCDName VARCHAR(50) ,
+);
+
+-- Allergies table
+
+CREATE TABLE Allergies (
+    AllergiesID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+    AllergiesName VARCHAR(50) ,
+);
+
+-- NCD_Details table
+
+CREATE TABLE NCD_Details (
+    ID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+    PatientID INT NOT NULL,
+    NCDID INT NOT NULL,
+
+    FOREIGN KEY (PatientID) REFERENCES Patients(ID),
+    FOREIGN KEY (NCDID) REFERENCES NCDs(NCDID)
+);
+
+-- Allergies_Details table
+
+CREATE TABLE Allergies_Details (
+    ID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+    PatientID INT NOT NULL,
+    AllergiesID INT NOT NULL,
+
+    FOREIGN KEY (PatientID) REFERENCES Patients(ID),
+    FOREIGN KEY (AllergiesID) REFERENCES Allergies(AllergiesID)
+);

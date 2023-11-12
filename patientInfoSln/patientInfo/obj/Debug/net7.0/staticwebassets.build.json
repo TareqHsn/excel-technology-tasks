@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "foPRV8OBjTtVCAHJfWyoECOVggmws2cNjQiBvjFSkbU=",
+  "Source": "patientInfo",
+  "BasePath": "_content/patientInfo",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

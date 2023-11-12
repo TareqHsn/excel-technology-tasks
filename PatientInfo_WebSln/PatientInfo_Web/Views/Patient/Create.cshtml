@@ -1,0 +1,63 @@
+﻿@model PatientInfo_Web.Models.DTOs.Patient
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create Patient</h2>
+
+<div id="validation-summary" class="alert alert-danger" style="display: none;"></div>
+
+<form id="createForm">
+    <div class="form-group">
+        <label asp-for="Name" class="control-label">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    
+
+    <button type="button" class="btn btn-primary" id="btnCreate">Create</button>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#btnCreate").on("click", function () {
+                createPatient();
+            });
+        });
+
+        function createPatient() {
+            var formData = $("#createForm").serialize();
+
+            $.ajax({
+                type: "POST",
+                url: "/api/patient", //enter url
+                data: formData,
+                success: function (data) {
+                    alert("Patient created successfully!");
+                    window.location.href = "/Patient/Index"; //enter url
+                },
+                error: function (xhr) {
+                    if (xhr.status === 400) {
+                        displayValidationErrors(xhr.responseJSON);
+                    } else {
+                        alert("Error creating patient. Please try again.");
+                    }
+                }
+            });
+        }
+
+        function displayValidationErrors(errors) {
+            var validationSummary = $("#validation-summary");
+            validationSummary.html("");
+
+            for (var i = 0; i < errors.length; i++) {
+                validationSummary.append("<p>" + errors[i] + "</p>");
+            }
+
+            validationSummary.show();
+        }
+    </script>
+}

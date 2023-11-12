@@ -1,0 +1,109 @@
+﻿@model IEnumerable<PatientInfo_Web.Models.DTOs.Disease>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Disease Index</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .add-button {
+            margin-top: 20px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Disease Index</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Epilepsy</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var disease in Model)
+                {
+                    <tr>
+                        <td>@disease.DiseaseID</td>
+                        <td>@disease.DiseaseName</td>
+                        <td>@disease.Epilepsy</td>
+                        <td>
+                            <a href="javascript:void(0);" onclick="editDisease(@disease.DiseaseID)">Edit</a> |
+                            <a href="javascript:void(0);" onclick="deleteDisease(@disease.DiseaseID)">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button class="add-button" onclick="addDisease()">Add Disease</button>
+    </div>
+
+    <script>
+        function editDisease(id) {
+           
+            window.location.href = `/Disease/Edit/${id}`;
+        }
+
+        function deleteDisease(id) {
+            if (confirm("Are you sure you want to delete this disease?")) {
+               
+                alert(`Delete action for disease with ID ${id}`);
+            }
+        }
+
+        function addDisease() {
+           
+            window.location.href = "/Disease/Create";
+        }
+    </script>
+
+</body>
+</html>
